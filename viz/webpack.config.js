@@ -18,9 +18,6 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       components: path.resolve(__dirname, 'src/components/'),
-      roots: path.resolve(__dirname, 'src/roots/'),
-      data: path.resolve(__dirname, 'src/data/'),
-      vizlib: path.resolve(__dirname, '../vizlib/dist'),
     },
   },
   devtool: 'source-map',
@@ -47,6 +44,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: /node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           'style-loader',
           {
@@ -74,10 +77,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.csv$/,
-        use: [{ loader: 'dsv-loader', options: { delimiter: ',' } }],
       },
     ],
   },

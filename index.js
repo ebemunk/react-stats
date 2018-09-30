@@ -7,7 +7,9 @@ import traverse from '@babel/traverse'
 import { getFilesFromDir } from './src/util'
 import visitor from './src/visitor'
 
-const srcPath = '../blog/projects/year-in-van/src'
+// const srcPath = '../blog/projects/year-in-van/src'
+// const srcPath = '../react-vis/src'
+const srcPath = '../blog/projects/lost-text-mining/viz2/src'
 
 export default async function reactStats() {
   const files = getFilesFromDir(srcPath, ['.js', '.jsx'])
@@ -17,7 +19,12 @@ export default async function reactStats() {
       const code = await promises.readFile(`${srcPath}${file}`, 'utf-8')
       const ast = parse(code, {
         sourceType: 'module',
-        plugins: ['jsx', 'objectRestSpread'],
+        plugins: [
+          'jsx',
+          'objectRestSpread',
+          'classProperties',
+          'exportDefaultFrom',
+        ],
       })
       const state = []
       traverse(ast, visitor, null, state)
